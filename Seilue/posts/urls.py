@@ -7,7 +7,7 @@ from .views import (
 	post_detail,
 	post_update,
 	post_delete,
-	)
+)
 
 urlpatterns = [
 	url(r'^$', post_list, name='list'),
