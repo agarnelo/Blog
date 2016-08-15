@@ -97,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'seildb',
         'USER': 'seiluser',
-        'PASSWORD': '402Hannie*',
+        'PASSWORD': '402Honey*',
         'HOST': 'localhost',
         'PORT': '',
     }
