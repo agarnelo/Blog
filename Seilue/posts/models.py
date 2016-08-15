@@ -7,9 +7,8 @@ from django.db.models.signals import pre_save
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.text import slugify
-
-
 from markdown_deux import markdown
+
 
 # Create your models here.
 # MVC MODEL VIEW CONTROLLER
