@@ -75,11 +75,16 @@ $(document).ready(function(){
         $("#preview-title").text(value)
     }
     setTitle(titleInput.val())
+
     titleInput.keyup(function(){
         var newContent = $(this).val()
         setTitle(newContent)
     })
 
+    $(".comment-reply-btn").click(function(event){
+        event.preventDefault();
+        $(this).parent().next(".comment-reply").fadeToggle();
+    })
 })
 </script>
 

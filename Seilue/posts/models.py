@@ -9,7 +9,10 @@ from django.utils.safestring import mark_safe
 from django.utils.text import slugify
 from markdown_deux import markdown
 
+from django.contrib.contenttypes.models import ContentType
 
+
+from comments.models import Comment
 # Create your models here.
 # MVC MODEL VIEW CONTROLLER
 
@@ -73,6 +76,17 @@ class Post(models.Model):
         markdown_text = markdown(content)
         return mark_safe(markdown_text)
 
+    @property
+    def comments(self):
+        instance = self
+        qs = Comment.objects.filter_by_instance(instance)
+        return qs
+
+    @property
+    def get_content_type(self):
+        instance = self
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        return content_type
 
 
 def create_slug(instance, new_slug=None):
