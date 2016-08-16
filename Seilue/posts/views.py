@@ -38,6 +38,7 @@ def post_detail(request, slug=None):
             raise Http404
     share_string = quote_plus(instance.content)
 
+
     initial_data = {
         "content_type": instance.get_content_type,
         "object_id": instance.id
@@ -73,6 +74,8 @@ def post_detail(request, slug=None):
         "comments": comments,
         "comment_form": form,
     }
+    print(instance.read_time)
+
     return render(request, "post_detail.html", context)
 
 
