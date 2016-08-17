@@ -45,11 +45,13 @@ def post_detail(request, slug=None):
     }
 
     form = CommentForm(request.POST or None, initial = initial_data)
-    if form.is_valid():
+
+    if form.is_valid() and request.user.is_authenticated():
         c_type = form.cleaned_data.get("content_type")
         content_type = ContentType.objects.get(model=c_type)
         obj_id = form.cleaned_data.get("object_id")
         content_data = form.cleaned_data.get("content")
+        parent_obj = None
         try:
             parent_id = int(request.POST.get("parent_id"))
         except:
@@ -74,7 +76,6 @@ def post_detail(request, slug=None):
         "comments": comments,
         "comment_form": form,
     }
-    print(instance.read_time)
 
     return render(request, "post_detail.html", context)
 
