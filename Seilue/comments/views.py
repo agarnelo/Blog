@@ -43,7 +43,6 @@ def comment_thread(request, id):
     if not obj.is_parent:
         obj = obj.parent
 
-
     content_object = obj.content_object
     content_id = obj.content_object.id
     initial_data = {
