@@ -1,27 +1,5 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, HyperlinkedIdentityField
 from posts.models import Post
-
-class PostListSerializer(ModelSerializer):
-    class Meta:
-        model = Post
-        fields = [
-            "user",
-            "title",
-            "slug",
-            "content",
-            "publish"
-        ]
-
-class PostDetailSerializer(ModelSerializer):
-    class Meta:
-        model = Post
-        fields = [
-            "id",
-            "title",
-            "slug",
-            "content",
-            "publish"
-        ]
 
 class PostCreateUpdateSerializer(ModelSerializer):
     class Meta:
@@ -32,15 +10,33 @@ class PostCreateUpdateSerializer(ModelSerializer):
             "publish"
         ]
 
-# data = {
-#     "title": "Post",
-#     "content": "Content",
-#     "publish": "2016-9-9",
-#     "slug": "post160909"
-# }
+post_detail_url = HyperlinkedIdentityField(
+    view_name='posts-api:detail',
+    lookup_field='slug'
+)
 
-# new_item = PostSerializer(data=data)
-# if new_item.is_valid():
-#     new_item.save()
-# else:
-#     print (new_item.errors)
+class PostDetailSerializer(ModelSerializer):
+    url = post_detail_url
+    class Meta:
+        model = Post
+        fields = [
+            "url",
+            "id",
+            "title",
+            "slug",
+            "content",
+            "publish"
+        ]
+
+class PostListSerializer(ModelSerializer):
+    url = post_detail_url
+    class Meta:
+        model = Post
+        fields = [
+            "url",
+            "user",
+            "title",
+            "content",
+            "publish"
+        ]
+

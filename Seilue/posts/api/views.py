@@ -31,10 +31,13 @@ from rest_framework.filters import (
     OrderingFilter,
 )
 
+from .pagination import PostLimitOffsetPagination, PostPageNumberPagination
+
 class PostListAPIView(ListAPIView):
     serializer_class = PostListSerializer
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['title', 'content', 'user__first_name']
+    pagination_class = PostPageNumberPagination
 
     def get_queryset(self, *args, **kwargs):
         queryset_list = Post.objects.all()
@@ -47,7 +50,6 @@ class PostListAPIView(ListAPIView):
                 Q(user_last_name__icontains=query)
             ).distinct()
         return queryset_list
-
 
 
 class PostDetailAPIView(RetrieveAPIView):
@@ -74,3 +76,5 @@ class PostDeleteAPIView(DestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
     lookup_field = "slug"
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
